@@ -1,0 +1,45 @@
+<div class="mirage-gen-heading-section">
+  <u class="mirage-code-heading">For DB(Data Base)</u>
+  {{#if this.canShowDB}}
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mirage-gen-icon" data-ember-extension="1" {{action "toggleshowDB"}}>
+      <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+      <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+    </svg>
+  {{/if}}
+</div>
+{{#if this.canShowDB}}
+  {{#each this.outputArr as |resultObj index|}}
+    {{#if resultObj.isFactory}}
+      <button class="mirage-gen-accordion" id={{concat "mirage-gen-toggle-" index}} type="button" {{action "showSpecificDB" (concat "mirage-gen-toggle-" index) (concat "mirage-panel-" index)}}>
+        <p class="mirage-code-heading mirage-code-subheading">In Factory - {{resultObj.prop}}.js</p>
+      </button>
+      {{mirage-gen-db/mirage-gen-factory class="mirage-code-section mirage-gen-accordion-panel" id=(concat "mirage-panel-" index) resultObj=resultObj}}
+    {{else}}
+      <button class="mirage-gen-accordion" id={{concat "mirage-gen-toggle-" index}} type="button" {{action "showSpecificDB" (concat "mirage-gen-toggle-" index) (concat "mirage-panel-" index)}}>
+        <p class="mirage-code-heading mirage-code-subheading">In Fixture - {{resultObj.prop}}.js</p>
+      </button>
+      {{mirage-gen-db/mirage-gen-fixture class="mirage-code-section mirage-gen-accordion-panel" id=(concat "mirage-panel-" index) resultObj=resultObj}}
+    {{/if}}
+  {{/each}}
+{{else}}
+  <MirageGenObjTree @obj={{this.response.data}} @resetObj={{resetObj}} />
+  <button type="button" class="mirage-gen-btn" {{action "toggleshowDB"}}>Generate DB</button>
+{{/if}}
+<div class="mirage-code-section">
+  <u class="mirage-code-heading">For Tests</u>
+  <section class="mirage-pos-relative mirage-code">
+    <MirageGenCopyPaste @editorId="test-code-block">
+      <pre contenteditable={{true}} class="mirage-code-block" id="test-code-block">test('Test', async(assert) => {
+{{#each this.factories as |node|}}
+{{#if node.isArray}}
+  server.createList('{{node.prop}}', {{node.arrLength}});
+{{else}}
+  server.create('{{node.prop}}');
+{{/if}}
+{{/each}}
+{{#if this.fixtures}}  server.loadFixtures({{/if}}{{#each this.fixtures as |node|}}'{{node.prop}}'{{/each}}{{#if this.fixtures}});
+{{/if}}
+});</pre>
+    </MirageGenCopyPaste>
+  </section>
+</div>

@@ -3,7 +3,7 @@
 ## Installation
 
 * `git clone <repository-url>`
-* `cd ember-mirage-gen-2`
+* `cd ember-mirage-gen`
 * `npm install`
 
 ## Linting

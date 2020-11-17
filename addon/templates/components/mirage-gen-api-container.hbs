@@ -1,0 +1,17 @@
+{{#if canshowMiragePreview}}
+  <div>
+    <header>
+      <h1>Ember Mirage Information</h1>
+      <span class="mirage-close mirage-pos-relative" {{action "hideMiragePreview"}}>x</span>
+    </header>
+    <MirageGenApi class="mirage-code-section" @response={{this.selectedMirageResponse}} />
+    <MirageGenDb @response={{this.selectedMirageResponse}} @resetObj={{action "resetObj"}} />
+  </div>
+{{else}}
+  {{input type="text" class="mirage-gen-search-input" value=this.searchValue placeholder="Type your API Name" autofocus=true}}
+  <ul class="mirage-api-list">
+    {{#each this.filteredResponses as |response|}}
+      <li {{action "showMiragePreview" response}}>{{response.url}}</li>
+    {{/each}}
+  </ul>
+{{/if}}

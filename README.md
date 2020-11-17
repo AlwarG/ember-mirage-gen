@@ -1,4 +1,4 @@
-ember-mirage-gen-2
+ember-mirage-gen
 ==============================================================================
 
 [Short description of the addon.]
@@ -15,7 +15,7 @@ Installation
 ------------------------------------------------------------------------------
 
 ```
-ember install ember-mirage-gen-2
+ember install ember-mirage-gen
 ```
 
 

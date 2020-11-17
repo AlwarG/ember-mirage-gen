@@ -1,0 +1,8 @@
+<div class="mirage-gen">
+  <p class="mirage-gen-logo {{if this.canShowAPIContainer "mirage-gen-logo-active"}}" {{action "showAPIContainer"}}>M</p>
+</div>
+{{#if this.canShowAPIContainer}}
+  <div class="mirage-pos-relative mirage-z-index-show">
+    <MirageGenApiContainer @mirageResponses={{this.mirageResponses}} class="mirage-api-container" />
+  </div>
+{{/if}}

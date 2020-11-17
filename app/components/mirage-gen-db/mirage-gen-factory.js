@@ -1,0 +1,1 @@
+export { default } from 'ember-mirage-gen/components/mirage-gen-db/mirage-gen-factory';
