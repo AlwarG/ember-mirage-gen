@@ -3,6 +3,6 @@
 </div>
 {{#if this.canShowAPIContainer}}
   <div class="mirage-pos-relative mirage-z-index-show">
-    <MirageGenApiContainer @mirageResponses={{this.mirageResponses}} class="mirage-api-container" />
+    <MirageGenApiContainer @mirageResponses={{this.mirageResponses}} class="mirage-api-container" @clearAPIS={{action "clearAPIS"}} />
   </div>
 {{/if}}

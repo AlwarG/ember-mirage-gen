@@ -29,6 +29,9 @@ export default Component.extend({
   actions: {
     showAPIContainer() {
       this.toggleProperty('canShowAPIContainer');
+    },
+    clearAPIS() {
+      this.set('mirageResponses', A());
     }
   }
 });
