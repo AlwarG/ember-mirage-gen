@@ -17,24 +17,10 @@ export default Component.extend({
   },
 
   getResponse() {
-    let fool = {
-      student: {
-          'personal-data': {
-            name: 'myname',
-            age: 12
-          },
-          'educational-data': {
-             marks: 98,
-             section: 'B'
-          }
-       } 
-      }
-    let foolUrl = 'https://sample/studentdata';
     window.xhook.after(({ method }, { finalUrl: url, data }) => {
       this.mirageResponses.pushObject({
-        url: foolUrl,
-        // data: JSON.parse(data),
-        data: fool,
+        url,
+        data: JSON.parse(data),
         method: (method || '').toLowerCase()
       });
     });

@@ -58,6 +58,23 @@ Compatibility
 * Ember.js v2.18 or above
 * Ember CLI v2.13 or above
 
+Usage
+------------------------------------------------------------------------------
+
+1. Add the following code in the application.hbs
+```
+  <MirageGen />
+```
+2. In your config/environment.js, add an ember-mirage-gen object as below.
+```javascript
+// config/environment.js
+let ENV = {
+  'ember-mirage-gen': {
+    isEnabled: environment === 'development',
+  }
+};
+```
+3. Visit the app and click the `mirage-gen` icon, you will see the list of API's
 
 Contributing
 ------------------------------------------------------------------------------
