@@ -5,11 +5,13 @@
   "keywords": [
     "ember-addon"
   ],
-  "repository": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlwarG/ember-mirage-gen.git"
+  },
   "license": "MIT",
-  "author": "",
+  "author": "Alwar G",
   "directories": {
-    "doc": "doc",
     "test": "tests"
   },
   "scripts": {
@@ -59,5 +61,10 @@
   },
   "ember-addon": {
     "configPath": "tests/dummy/config"
-  }
+  },
+  "main": "index.js",
+  "bugs": {
+    "url": "https://github.com/AlwarG/ember-mirage-gen/issues"
+  },
+  "homepage": "https://github.com/AlwarG/ember-mirage-gen#readme"
 }
