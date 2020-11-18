@@ -174,13 +174,13 @@
   align-items: baseline;
   justify-content: space-between;
   padding: 0 10px;
+}
 
-  .mirage-gen-icon {
-    cursor: pointer;
+.mirage-gen-icon {
+  cursor: pointer;
 
-    &:hover {
-      color: cyan;
-    }
+  &:hover {
+    color: cyan;
   }
 }
 

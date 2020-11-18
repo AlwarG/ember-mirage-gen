@@ -2,10 +2,21 @@
   <div>
     <header>
       <h1>Ember Mirage Information</h1>
+      {{#if this.canShowDB}}
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mirage-gen-icon mirage-close" style="right: 28px;top: 37px;" {{action "toggleshowDB"}}>
+          <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+          <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+        </svg>
+      {{/if}}
       <span class="mirage-close mirage-pos-relative" {{action "hideMiragePreview"}}>x</span>
     </header>
-    <MirageGenApi class="mirage-code-section" @response={{this.selectedMirageResponse}} />
-    <MirageGenDb @response={{this.selectedMirageResponse}} @resetObj={{action "resetObj"}} />
+    {{#if this.canShowDB}}
+      <MirageGenApi class="mirage-code-section" @response={{this.selectedMirageResponse}} />
+      <MirageGenDb @response={{this.selectedMirageResponse}} />
+    {{else}}
+      <MirageGenObjTree @obj={{this.selectedMirageResponse.data}} @resetObj={{action "resetObj"}} />
+      <button type="button" class="mirage-gen-btn" {{action "toggleshowDB"}}>Generate Info</button>
+    {{/if}}
   </div>
 {{else}}
   <div class="mirage-gen-heading-section" style="align-items: center;">

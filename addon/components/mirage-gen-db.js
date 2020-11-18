@@ -4,7 +4,6 @@ import { computed } from '@ember/object';
 
 export default Component.extend({
   layout,
-  canShowDB: false,
   factories: computed('outputArr', 'outputArr.[]', 'outputArr.@each.{isRemoved,isFactory}', function() {
     return (this.outputArr || []).filter(({ isFactory, isRemoved } = {}) => isFactory && !isRemoved);
   }),
@@ -48,9 +47,6 @@ export default Component.extend({
       document.getElementById(toggleId).classList.toggle('active');
       let panel = document.getElementById(panelId);
       panel.style.maxHeight = panel.style.maxHeight ? null : `${panel.scrollHeight}px`;
-    },
-    toggleshowDB() {
-      this.toggleProperty('canShowDB');
     }
   }
 });
