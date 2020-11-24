@@ -1,9 +1,11 @@
 import Component from '@ember/component';
+import { inject as service } from '@ember/service';
 import layout from '../templates/components/mirage-gen';
 import { A } from '@ember/array';
 
 export default Component.extend({
   layout,
+  mirageGenService: service('mirage-gen'),
   canShowAPIContainer: false,
 
   init() {
@@ -13,16 +15,25 @@ export default Component.extend({
 
   didInsertElement() {
     this._super(...arguments);
-    window.onload = () => this.getResponse();
+    let config =  this.get('mirageGenService.config') || {};
+    window.onload = () => this.getResponse(config);
   },
 
-  getResponse() {
+  getResponse({ isOnlyForCurrentDomain }) {
     window.xhook.after(({ method }, { finalUrl: url, data }) => {
-      this.mirageResponses.pushObject({
-        url,
-        data: JSON.parse(data),
-        method: (method || '').toLowerCase()
-      });
+      let canPushResponse = true;
+      if (isOnlyForCurrentDomain) {
+        let apiDomain = url.split("/")[2];
+        canPushResponse = window.location.hostname === apiDomain;
+      }
+
+      if (canPushResponse) {
+        this.mirageResponses.pushObject({
+          url,
+          data: JSON.parse(data),
+          method: (method || '').toLowerCase()
+        });
+      }
     });
   },
 

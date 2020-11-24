@@ -1,9 +1,11 @@
 import Component from '@ember/component';
 import layout from '../templates/components/mirage-gen-db';
+import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 
 export default Component.extend({
   layout,
+  mirageGenService: service('mirage-gen'),
   factories: computed('outputArr', 'outputArr.[]', 'outputArr.@each.{isRemoved,isFactory}', function() {
     return (this.outputArr || []).filter(({ isFactory, isRemoved } = {}) => isFactory && !isRemoved);
   }),
@@ -14,10 +16,19 @@ export default Component.extend({
     let { data: obj } = this.response || {};
     obj = obj || {};
     let dbArray = [];
-    return this.getdbArray(dbArray, obj, 'root');
+    return this.getdbArray(dbArray, obj, 'root', null);
   }),
 
-  getdbArray(dbArray, obj, prop = 'root') {
+  init() {
+    this._super(...arguments);
+    const { excludedNodes } =  this.get('mirageGenService.config') || {};
+    this.set('excludedNodes', excludedNodes || []);
+  },
+
+  getdbArray(dbArray, obj, prop = 'root', parentProp = null) {
+    if  (parentProp === 'root' && (this.excludedNodes || []).includes(prop)) {
+      return dbArray;
+    }
     if  (typeof obj === 'object') {
       let { isFactory, isFixture, isArray } = obj;
       let info = (!isFixture && isArray && typeof obj[0] === 'object') ? obj[0]: obj;
@@ -36,7 +47,7 @@ export default Component.extend({
       }
       let objKeys = Object.keys(info).filter((key) => typeof info[key] === 'object');
       objKeys.forEach((key) => {
-        return this.getdbArray(dbArray, info[key], key);
+        return this.getdbArray(dbArray, info[key], key, prop);
       });
     }
     return dbArray;

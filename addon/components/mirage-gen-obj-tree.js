@@ -1,5 +1,6 @@
 import Component from '@ember/component';
 import objFns  from '../utils/obj-fns';
+import { inject as service } from '@ember/service';
 import layout from '../templates/components/mirage-gen-obj-tree';
 
 let typesMap = {
@@ -10,7 +11,15 @@ let typesMap = {
 
 export default Component.extend({
   layout,
+  mirageGenService: service('mirage-gen'),
   output: {},
+
+  didInsertElement() {
+    this._super(...arguments);
+    let { excludedNodes } = this.get('mirageGenService.config') || {};
+    this.set('excludedNodes', excludedNodes || []);
+  },
+
   getProperty(prop) {
     return Array.isArray(prop) ? (prop[0] || {}) : prop;
   },
@@ -20,7 +29,7 @@ export default Component.extend({
     let graphEle = this.element.querySelector('#my-graph');
     graphEle.innerHTML = '';
     let listEle = document.createElement('li');
-    let listEleInnerHTML = '<span>Data<div class="mirage-gen-tick-section">';
+    let listEleInnerHTML = '<span>Starting Node<div class="mirage-gen-tick-section">';
     Object.keys(typesMap).forEach((key) => {
       let property = `obj.${key}`;
       listEleInnerHTML= `${listEleInnerHTML} <section class="tick-mark-section" obj-location="${property}">${this.getTickSvg(this.get(property) ? 'svg-selected' : 'tick-icon', property)}<br><span class="${typesMap[key].class}">${typesMap[key].name}</span></section>`;
@@ -40,19 +49,21 @@ export default Component.extend({
     if (objNodes.length) {
       let ulEle = document.createElement('ul');
       rootEle.appendChild(ulEle);
-      let isSingleNode = objNodes.length === 1;
+      let canRemoveBorder = objNodes.length === 1 || (objNodes.length < 3 && objNodes.some((prop) => (this.excludedNodes || []).includes(prop)));
       objNodes.forEach((prop) => {
-        let listEle = document.createElement('li');
-        if (isSingleNode) {
-          listEle.classList.add('different');
+        if (!(this.excludedNodes || []).includes(prop)) {
+          let listEle = document.createElement('li');
+          if (canRemoveBorder) {
+            listEle.classList.add('different');
+          }
+          let objLocation = obj.isArray ? `${parentProp}.0.${prop}` : `${parentProp}.${prop}`;
+          let innerSpanElement = document.createElement('span');
+          innerSpanElement.appendChild(document.createTextNode(prop));
+          innerSpanElement.appendChild(this.getTickMark(objLocation));
+          listEle.appendChild(innerSpanElement);
+          this.constructGraph(outputObj[prop], listEle, objLocation);
+          ulEle.appendChild(listEle);
         }
-        let objLocation = obj.isArray ? `${parentProp}.0.${prop}` : `${parentProp}.${prop}`;
-        let innerSpanElement = document.createElement('span');
-        innerSpanElement.appendChild(document.createTextNode(prop));
-        innerSpanElement.appendChild(this.getTickMark(objLocation));
-        listEle.appendChild(innerSpanElement);
-        this.constructGraph(outputObj[prop], listEle, objLocation);
-        ulEle.appendChild(listEle);
       });
     }
   },

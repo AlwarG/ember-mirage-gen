@@ -1,18 +1,21 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
+import { inject as service } from '@ember/service';
 import objFns  from '../utils/obj-fns';
 import layout from '../templates/components/mirage-gen-api';
 
 export default Component.extend({
   layout,
-  output: computed('response.data', function() {
+  mirageGenService: service('mirage-gen'),
+  output: computed('response.data', 'excludedNodes', 'excludedNodes.[]', function() {
     let { data: obj } = this.response || {};
     obj = obj || {};
     if  (typeof obj === 'object' && (obj.isFactory || obj.isFixture)) {
       return `// Type your ${obj.isFactory ? 'Factory': 'Fixture'}`;
     }
+    let excludedNodes = [...objFns.getAddedNodes, ...(this.excludedNodes || [])];
     let info = JSON.stringify(this.getConfigObj(obj), (key, value) => {
-      return objFns.getAddedNodes.includes(key) ? undefined : value;
+      return excludedNodes.includes(key) ? undefined : value;
     }, 2);
     info = info.replace(/"/g, '\'');
     return info;
@@ -64,7 +67,11 @@ export default Component.extend({
   init() {
     this._super(...arguments);
     let { response: { url } = {} } = this;
-    this.set('url', this.getUrl(url));
+    const { excludedNodes } = this.get('mirageGenService.config') || {};
+    this.setProperties({
+      url: this.getUrl(url),
+      excludedNodes: excludedNodes || []
+    });
   },
 
   getUrl(url) {
