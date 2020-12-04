@@ -14,7 +14,15 @@
       <MirageGenApi class="mirage-code-section" @response={{this.selectedMirageResponse}} />
       <MirageGenDb @response={{this.selectedMirageResponse}} />
     {{else}}
-      <MirageGenObjTree @obj={{this.selectedMirageResponse.data}} @resetObj={{action "resetObj"}} />
+      <u class="mirage-code-heading">Your response</u>
+      <section class="mirage-pos-relative mirage-code">
+        <pre class="mirage-code-block">{{this.stringifiedResponse}}</pre>
+      </section>
+      {{#if this.isObjFormat}}
+        <u class="mirage-code-heading">Tree Structure</u>
+        <MirageGenObjTree @obj={{this.selectedMirageResponse.data}} @resetObj={{action "resetObj"}} />
+      {{/if}}
+      <br>
       <button type="button" class="mirage-gen-btn" {{action "toggleshowDB"}}>Generate Info</button>
     {{/if}}
   </div>

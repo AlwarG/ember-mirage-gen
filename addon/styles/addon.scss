@@ -307,6 +307,11 @@
 .graph {
   display: flex;
   align-items: center;
+  overflow-x: scroll;
+
+  &::-webkit-scrollbar-track {
+    background: #212121;
+  }
 }
 
 .mirage-gen-tick-section {
