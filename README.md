@@ -44,6 +44,7 @@ As shown in the above image, we have the section of the object tree. Here, we ca
   3. Normal
 
   After selecting the option, we should click the `Generate Info` button.
+
   Note: if the node is normal, then it will be included in the config file section
 
 ![mirage-gen-api](https://i.imgur.com/cukSJ1u.png)
