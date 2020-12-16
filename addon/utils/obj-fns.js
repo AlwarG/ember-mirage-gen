@@ -1,5 +1,7 @@
+import { setProperties } from '@ember/object';
+
 let addNodes = (obj) => {
-  Object.assign(obj, {
+  setProperties(obj, {
     isArray: Array.isArray(obj),
     isFactory: false,
     isFixture: false,

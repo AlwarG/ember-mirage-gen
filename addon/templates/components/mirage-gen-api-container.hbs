@@ -19,8 +19,30 @@
         <pre class="mirage-code-block">{{this.stringifiedResponse}}</pre>
       </section>
       {{#if this.isObjFormat}}
-        <u class="mirage-code-heading">Tree Structure</u>
-        <MirageGenObjTree @obj={{this.selectedMirageResponse.data}} @resetObj={{action "resetObj"}} />
+        {{#if this.hasObjProp}}
+          <u class="mirage-code-heading">Type of DB(DataBase)</u>
+          <MirageGenObjTree @obj={{this.selectedMirageResponse.data}} @resetObj={{action "resetObj"}} />
+        {{else}}
+          <table class="mirage-gen-table">
+            <tbody>
+              <tr>
+                <td><b>Type of DB(DataBase)</b></td>
+                <td>
+                  <input type="radio" id="Starting Node-1" name="Starting Node-1" checked={{resultObj.isFactory}} onclick={{action "selectDBType" resultObj "isFactory"}}>
+                  <label for="Starting Node-1">Factory</label>
+                </td>
+                <td>
+                  <input type="radio" id="Starting Node-2" name="Starting Node-2" checked={{resultObj.isFixture}} onclick={{action "selectDBType" resultObj "isFixture"}}>
+                  <label for="Starting Node-2">Fixture</label>
+                </td>
+                <td>
+                  <input type="radio" id="Starting Node-3" name="Starting Node-3" checked={{resultObj.isRemoved}} onclick={{action "selectDBType" resultObj "isRemoved"}}>
+                  <label for="Starting Node-3">Normal</label>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        {{/if}}
       {{/if}}
       <br>
       <button type="button" class="mirage-gen-btn" {{action "toggleshowDB"}}>Generate Info</button>

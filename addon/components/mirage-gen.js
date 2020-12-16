@@ -18,6 +18,18 @@ export default Component.extend({
     let config =  this.get('mirageGenService.config') || {};
     window.onload = () => this.getResponse(config);
   },
+  isJSONString(jsonString) {
+    if (typeof jsonString !== "string") {
+      return false;
+    }
+
+    try {
+      JSON.parse(jsonString);
+      return true;
+    } catch {
+      return false;
+    }
+  },
 
   getResponse({ isOnlyForCurrentDomain }) {
     window.xhook.after(({ method }, { finalUrl: url, data }) => {
@@ -30,7 +42,7 @@ export default Component.extend({
       if (canPushResponse) {
         this.mirageResponses.pushObject({
           url,
-          data: JSON.parse(data),
+          data: this.isJSONString(data) ? JSON.parse(data) : data,
           method: (method || '').toLowerCase()
         });
       }

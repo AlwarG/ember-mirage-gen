@@ -1,21 +1,31 @@
 import Component from '@ember/component';
-import { computed } from '@ember/object';
+import { computed, setProperties } from '@ember/object';
 import objFns  from '../utils/obj-fns';
+import { reads } from '@ember/object/computed';
 import layout from '../templates/components/mirage-gen-api-container';
 
 export default Component.extend({
   layout,
   canShowDB: false,
-  isObjFormat: computed('selectedMirageResponse.data', function() {
-    let response = this.get('selectedMirageResponse.data');
+  resultObj: reads('selectedMirageResponse.data'),
+  isObjFormat: computed('resultObj', function() {
+    let { resultObj: response } = this;
     return typeof response === 'object';
   }),
 
-  stringifiedResponse: computed('selectedMirageResponse.data', 'isObjFormat', function() {
-    let response = this.get('selectedMirageResponse.data');
+  hasObjProp: computed('resultObj', 'isObjFormat', function() {
+    if (this.isObjFormat) {
+      let { resultObj: response } = this;
+      return Object.keys(response).some((key) => typeof response[key] === 'object');
+    }
+    return false;
+  }),
+
+  stringifiedResponse: computed('resultObj', 'isObjFormat', function() {
+    let { resultObj: response } = this;
+
     if (this.isObjFormat) {
       let unwantedNodes = [...objFns.getAddedNodes];
-
       unwantedNodes.push('srcRoot');
       return JSON.stringify(response, (key, value) => {
         return unwantedNodes.includes(key) ? undefined : value;
@@ -36,6 +46,14 @@ export default Component.extend({
   actions: {
     hideMiragePreview() {
       this.set('canshowMiragePreview', false);
+    },
+
+    selectDBType(outputObj, key) {
+      setProperties(outputObj, {
+        isFactory: key === 'isFactory',
+        isFixture: key === 'isFixture',
+        isRemoved: key === 'isRemoved'
+      });
     },
 
     showMiragePreview(selectedMirageResponse) {
