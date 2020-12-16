@@ -83,11 +83,11 @@ let ENV = {
   }
 };
 ```
-1. isEnabled - it works only when this node is true
+* isEnabled - it works only when this node is true
 
-2. isOnlyForCurrentDomain - Allow only the same domain API's.
+* isOnlyForCurrentDomain - Allow only the same domain API's.
 
-3.excludedNodes - sometimes we got the same node for all responses and we don't need the mirage information for those nodes. So, we can exclude those nodes by adding those nodes in this array.
+* excludedNodes - sometimes we got the same node for all responses and we don't need the mirage information for those nodes. So, we can exclude those nodes by adding those nodes in this array.
 
 3. Visit the app and click the `mirage-gen` icon, you will see the list of API's
 
