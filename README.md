@@ -10,6 +10,15 @@ Installation
 ```
 ember install ember-mirage-gen
 ```
+Compatibility
+------------------------------------------------------------------------------
+
+* Ember.js v2.18 or above
+* Ember CLI v2.13 or above
+
+Documentation
+------------------------------------------------------------------------------
+
 Consider we have the following sample response for the particular request
 ```javascript
   request = 'https://sample/studentdata';
@@ -27,8 +36,17 @@ Consider we have the following sample response for the particular request
             }
 ```
 The output for this response as
-![mirage-gen-api](https://i.imgur.com/LN0EI1f.png)
-### strucure
+![mirage-gen-option](https://i.imgur.com/X2pIfgr.png)
+As shown in the above image, we have the section of the object tree. Here, we can select the type of the node. The types are
+  1. Fixture
+  2. Factory
+  3. Normal
+  <br>
+  After selecting the option, we should click the `Generate Info` button.
+  Note: if the node is normal, then it will be included in the config file section
+![mirage-gen-api](https://i.imgur.com/cukSJ1u.png)
+
+### Info strucure
   Here, we have three sections
   1. config file
   2. DataBase
@@ -41,22 +59,10 @@ The output for this response as
     })
  ```
  #### 2) DataBase
-  As shown in the above image, we have the section of the object tree. Here, we can select the type of the node. The types are
-  1. Fixture
-  2. Factory
-  3. Normal
-  <br>
-  After selecting the option, we should click the `Generate DB` button.
-  Note: if the node is normal, then it will be included in the config file section
+  This section contains a list of fixtures and factories as we were chosen in the previous section.
  
 #### 3) Test file
-  It has the list of factories as well as fixtures like in the test file.
-
-Compatibility
-------------------------------------------------------------------------------
-
-* Ember.js v2.18 or above
-* Ember CLI v2.13 or above
+  It has the creation list of factories as well as fixtures like in the Ember test file.
 
 Usage
 ------------------------------------------------------------------------------
@@ -70,10 +76,16 @@ Usage
 // config/environment.js
 let ENV = {
   'ember-mirage-gen': {
-    isEnabled: environment === 'development',
+    isEnabled: environment === 'development', // Mandatory
+    isOnlyForCurrentDomain: true, // optional
+   excludedNodes: ['page-info'] // optional
   }
 };
 ```
+isEnabled - it works only when this node is true
+isOnlyForCurrentDomain - Allow only the same domain API's.
+excludedNodes - sometimes we got the same node for all responses and we don't need the mirage information for those nodes. So, we can exclude those nodes by adding those nodes in this array.
+
 3. Visit the app and click the `mirage-gen` icon, you will see the list of API's
 
 Contributing
