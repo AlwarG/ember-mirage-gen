@@ -37,11 +37,12 @@ Consider we have the following sample response for the particular request
 ```
 The output for this response as
 ![mirage-gen-option](https://i.imgur.com/X2pIfgr.png)
+
 As shown in the above image, we have the section of the object tree. Here, we can select the type of the node. The types are
   1. Fixture
   2. Factory
   3. Normal
-  <br>
+
   After selecting the option, we should click the `Generate Info` button.
   Note: if the node is normal, then it will be included in the config file section
 
@@ -70,7 +71,7 @@ Usage
 
 1. Add the following code in the application.hbs
 ```
-  <MirageGen />
+  <MirageGen @top="value" @left="value" />
 ```
 2. In your config/environment.js, add an ember-mirage-gen object as below.
 ```javascript
@@ -79,7 +80,7 @@ let ENV = {
   'ember-mirage-gen': {
     isEnabled: environment === 'development', // Mandatory
     isOnlyForCurrentDomain: true, // optional
-   excludedNodes: ['page-info'] // optional
+    excludedNodes: [] // optional
   }
 };
 ```
@@ -87,7 +88,7 @@ let ENV = {
 
 * isOnlyForCurrentDomain - Allow only the same domain API's.
 
-* excludedNodes - sometimes we got the same node for all responses and we don't need the mirage information for those nodes. So, we can exclude those nodes by adding those nodes in this array.
+* excludedNodes - sometimes we got the same node for all responses and we don't need the mirage information for those nodes. So, we can exclude those nodes by adding those nodes in this array. example: **page-info** conatins page information
 
 3. Visit the app and click the `mirage-gen` icon, you will see the list of API's
 
