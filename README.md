@@ -5,7 +5,7 @@ The addon will give the complete Mirage section after receiving the API call.
 
 Demo
 ------------------------------------------------------------------------------
-Demo is available <a href="https://alwarg.github.io/mirage-gen-demo/" target="_blank">here</a>
+Demo is available <a href="https://alwarg.github.io/mirage-gen-demo/" target="_blank" rel="noopener noreferrer">here</a>
 <br>
 ![mirage-gen-common](https://i.imgur.com/Lfsx51V.png)
 
@@ -52,8 +52,7 @@ As shown in the above image, we have the section of the object tree. Here, we ca
 
   Note: if the node is normal, then it will be included in the config file section
 
-![mirage-gen-api](https://i.imgur.com/cukSJ1u.png)
-
+![mirage-gen-api](https://i.imgur.com/5PBVm0m.png)
 ### Info strucure
   Here, we have three sections
   1. config file
@@ -67,8 +66,8 @@ As shown in the above image, we have the section of the object tree. Here, we ca
     })
  ```
  #### 2) DataBase
-  This section contains a list of fixtures and factories as we were chosen in the previous section.
-  Here, we can also compare our result with the available factory/fixture. For more info try it in the <a href="https://alwarg.github.io/mirage-gen-demo/" target="_blank">demo</a> page.
+  This section contains a list of fixtures and factories which are chosen in the previous section.
+  Here, we can also compare our result with the available `factory/fixture` and generate the new results.. For more info try it in the <a href="https://alwarg.github.io/mirage-gen-demo/" target="_blank" rel="noopener noreferrer">demo</a> page.
  
 #### 3) Test file
   It has the creation list of factories as well as fixtures like in the Ember test file.
