@@ -2,7 +2,11 @@ ember-mirage-gen
 ==============================================================================
 
 The addon will give the complete Mirage section after receiving the API call.
-Demo is available [here.](https://alwarg.github.io/mirage-gen-demo/)
+
+Demo
+------------------------------------------------------------------------------
+Demo is available [here.](https://alwarg.github.io/mirage-gen-demo/){:target="_blank"}
+<br>
 ![mirage-gen-common](https://i.imgur.com/Lfsx51V.png)
 
 Installation
@@ -64,7 +68,7 @@ As shown in the above image, we have the section of the object tree. Here, we ca
  ```
  #### 2) DataBase
   This section contains a list of fixtures and factories as we were chosen in the previous section.
-  Here, we can also compare our result with the available factory/fixture. For more info try it in the [demo](https://alwarg.github.io/mirage-gen-demo/) page.
+  Here, we can also compare our result with the available factory/fixture. For more info try it in the [demo](https://alwarg.github.io/mirage-gen-demo/){:target="_blank"} page.
  
 #### 3) Test file
   It has the creation list of factories as well as fixtures like in the Ember test file.
