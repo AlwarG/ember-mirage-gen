@@ -6,7 +6,7 @@ import { computed } from '@ember/object';
 
 let typesMap = {
   number: 'faker.random.number()',
-  string: 'faker.name.firstName()',
+  string: 'faker.hacker.noun()',
   boolean: 'faker.random.boolean()'
 }
 
@@ -50,7 +50,10 @@ export default Component.extend({
       if (typeof key === 'string' && key.includes('-') && !stringKeys.includes(key)) {
         stringKeys.push(key);
       }
-      let type = typesMap[typeof value];
+      let type = typeof value === 'boolean' ? typesMap[typeof value] : objFns.getFakerString(key);
+      if  (!type) {
+        type = typesMap[typeof value];
+      }
       if (type) {
         return (type === 'string' && typeof Number(value) === 'number') ? '`${' + typesMap.number + '}`' : type;
       }

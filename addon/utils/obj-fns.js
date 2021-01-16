@@ -1,4 +1,5 @@
 import { setProperties } from '@ember/object';
+import fakerConfig from '../utils/faker-config';
 
 let addNodes = (obj) => {
   setProperties(obj, {
@@ -129,8 +130,49 @@ let getKeys = (objString) => {
 }
 
 let getDBString = (string) => {
-  string = (string || '').split('// $MirageSection-Start$')[1];
-  return (string || '').split('// $MirageSection-End$')[0];
+  string = (string || '').replace(/ /g, '');
+  string = string.replace(/(\r\n|\n|\r)/g, '');
+  string = string.split('//$MirageSection-Start$')[1];
+  return (string || '').split('//$MirageSection-End$')[0];
 }
 
-export default { addCond, getAddedNodes, setChildNodes, getKeys, getDBString }
+let getFakerString = (key) => {
+  let myStr = key || '';
+  ['_', '-'].forEach((mySymbol) => {
+    myStr = myStr.replace(mySymbol, '');
+  })
+  myStr = myStr.toLowerCase();
+  let keys = Object.keys(fakerConfig);
+
+  let fakerKey = keys.find((str) => {
+    let res = str.toLowerCase();
+    return myStr.endsWith(res);
+  });
+
+  if (!fakerKey) {
+    let resKey = '';
+    let resValue = '';
+    let canBreak = false;
+    for (let i = 0; i < keys.length; i++) {
+      let fakerValues = fakerConfig[keys[i]];
+      for (let j = 0; j < fakerValues.length; j++) {
+        if (myStr.endsWith(fakerValues[j].toLowerCase())) {
+          resValue = fakerValues[j];
+          canBreak = true;
+          break;
+        }
+      }
+      if (canBreak) {
+        resKey = keys[i];
+        break;
+      }
+    }
+    if (resKey) {
+      return `faker.${resKey}.${resValue}()`
+    }
+    return '';
+  }
+  return `faker.${fakerKey}.${fakerConfig[fakerKey][0]}()`;
+}
+
+export default { addCond, getAddedNodes, setChildNodes, getKeys, getDBString, getFakerString }

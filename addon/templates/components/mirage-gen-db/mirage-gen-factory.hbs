@@ -1,7 +1,9 @@
 <section class="mirage-pos-relative mirage-code" style="margin-top: 10px;">
   <div>
-    {{input type="checkbox" id=(concat comparedObject.prop "-factory-change") checked=this.isComparionEnabled}}
-    <label class="form-check-label" for={{concat comparedObject.prop "-factory-change"}}>Compare and generate the missed nodes</label>
+    {{#let (get-random) as |random|}}
+      {{input type="checkbox" id=(concat "factory-change-" random) checked=this.isComparionEnabled}}
+      <label class="form-check-label" for={{concat "factory-change-" random}}>Compare and generate the missed nodes</label>
+    {{/let}}
   </div>
   <br>
   {{#if this.isComparionEnabled}}
