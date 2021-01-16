@@ -36,7 +36,7 @@ export default Component.extend({
 
   filteredResponses: computed('searchValue', 'mirageResponses.[]', function() {
     let { mirageResponses, searchValue } = this;
-    mirageResponses = mirageResponses || [];
+    mirageResponses = (mirageResponses || []).filter(({ url }) => url);
     if (searchValue) {
       return mirageResponses.filter(({ url }) => url.includes(searchValue));
     }
@@ -66,6 +66,24 @@ export default Component.extend({
     },
 
     resetObj(obj) {
+      let {
+        isArray,
+        isFactory,
+        isFixture,
+        isRemoved
+      } = obj;
+
+      if (isArray) {
+        let newArr = [...obj];
+        setProperties(newArr, {
+          isArray,
+          isFactory,
+          isFixture,
+          isRemoved
+        });
+        this.set('selectedMirageResponse.data', newArr);
+        return;
+      }
       this.set('selectedMirageResponse.data', {...obj});
     },
 

@@ -5,14 +5,14 @@
   {{#each this.outputArr as |resultObj index|}}
     {{#if resultObj.isFactory}}
       <button class="mirage-gen-accordion" id={{concat "mirage-gen-toggle-" index}} type="button" {{action "showSpecificDB" (concat "mirage-gen-toggle-" index) (concat "mirage-panel-" index)}}>
-        <p class="mirage-code-heading mirage-code-subheading">In Factory - for {{resultObj.prop}}</p>
+        <p class="mirage-code-heading mirage-code-subheading">Factory - for {{resultObj.prop}}</p>
       </button>
-      {{mirage-gen-db/mirage-gen-factory class="mirage-code-section mirage-gen-accordion-panel" id=(concat "mirage-panel-" index) resultObj=resultObj}}
+      {{mirage-gen-db/mirage-gen-factory class="mirage-code-section mirage-gen-accordion-panel" id=(concat "mirage-panel-" index) resultObj=resultObj factoriesList=this.factoriesList}}
     {{else}}
       <button class="mirage-gen-accordion" id={{concat "mirage-gen-toggle-" index}} type="button" {{action "showSpecificDB" (concat "mirage-gen-toggle-" index) (concat "mirage-panel-" index)}}>
-        <p class="mirage-code-heading mirage-code-subheading">In Fixture - for {{resultObj.prop}}</p>
+        <p class="mirage-code-heading mirage-code-subheading">Fixture - for {{resultObj.prop}}</p>
       </button>
-      {{mirage-gen-db/mirage-gen-fixture class="mirage-code-section mirage-gen-accordion-panel" id=(concat "mirage-panel-" index) resultObj=resultObj}}
+      {{mirage-gen-db/mirage-gen-fixture class="mirage-code-section mirage-gen-accordion-panel" id=(concat "mirage-panel-" index) resultObj=resultObj fixturesList=this.fixturesList}}
     {{/if}}
   {{/each}}
 {{/if}}

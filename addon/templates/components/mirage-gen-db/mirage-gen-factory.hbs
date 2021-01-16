@@ -1,7 +1,33 @@
 <section class="mirage-pos-relative mirage-code" style="margin-top: 10px;">
-  <MirageGenCopyPaste @editorId={{resultObj.prop}}>
-    <pre contenteditable={{true}} class="mirage-code-block" id={{resultObj.prop}}>import { Factory, faker } from 'ember-cli-mirage';
+  <div>
+    {{input type="checkbox" id=(concat comparedObject.prop "-factory-change") checked=this.isComparionEnabled}}
+    <label class="form-check-label" for={{concat comparedObject.prop "-factory-change"}}>Compare and generate the missed nodes</label>
+  </div>
+  <br>
+  {{#if this.isComparionEnabled}}
+    <label for={{concat comparedObject.prop "-factory-choice"}}>Choose your factory:</label>
+    <input
+    list={{concat comparedObject.prop "-factories-list"}}
+    class="mirage-gen-db-option-dropdown"
+    id={{concat comparedObject.prop "-factory-choice"}}
+    name={{concat comparedObject.prop "-factory-choice"}}
+    value={{this.selectedFactory}}
+    onchange={{action "setSelectedFactory"}}
+    >
 
-export default Factory.extend({{resultObj.info}});</pre>
-  </MirageGenCopyPaste>
+    <datalist id={{concat comparedObject.prop "-factories-list"}}>
+      {{#each this.factoriesList as |factory|}}
+        <option value={{factory}} />
+      {{/each}}
+    </datalist>
+  {{/if}}
+  {{#if this.isLoading}}
+    <p>Loading....</p>
+  {{else}}
+    <MirageGenCopyPaste @editorId={{comparedObject.prop}}>
+      <pre contenteditable={{true}} class="mirage-code-block" id={{comparedObject.prop}}>import { Factory, faker } from 'ember-cli-mirage';
+
+export default Factory.extend({{comparedObject.info}});</pre>
+    </MirageGenCopyPaste>
+  {{/if}}
 </section>

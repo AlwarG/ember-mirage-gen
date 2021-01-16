@@ -1,5 +1,31 @@
 <section class="mirage-pos-relative mirage-code" style="margin-top: 10px;">
-  <MirageGenCopyPaste @editorId={{resultObj.prop}}>
-    <pre contenteditable={{true}} class="mirage-code-block" id={{resultObj.prop}}>export default {{this.resultObj.info}}</pre>
-  </MirageGenCopyPaste>
+  <div>
+    {{input type="checkbox" id=(concat comparedObject.prop "-fixture-change") checked=this.isComparionEnabled}}
+    <label class="form-check-label" for={{concat comparedObject.prop "-fixture-change"}}>Compare and generate the missed nodes</label>
+  </div>
+  <br>
+  {{#if this.isComparionEnabled}}
+    <label for={{concat comparedObject.prop "-fixture-choice"}}>Choose your fixture:</label>
+    <input
+    list={{concat comparedObject.prop "-fixtures-list"}}
+    class="mirage-gen-db-option-dropdown"
+    id={{concat comparedObject.prop "-fixture-choice"}}
+    name={{concat comparedObject.prop "-fixture-choice"}}
+    value={{this.selectedFixture}}
+    onchange={{action "setSelectedfixture"}}
+    >
+
+    <datalist id={{concat comparedObject.prop "-fixtures-list"}}>
+      {{#each this.fixturesList as |fixture|}}
+        <option value={{fixture}} />
+      {{/each}}
+    </datalist>
+  {{/if}}
+  {{#if this.isLoading}}
+    <p>Loading....</p>
+  {{else}}
+    <MirageGenCopyPaste @editorId={{comparedObject.prop}}>
+      <pre contenteditable={{true}} class="mirage-code-block" id={{comparedObject.prop}}>export default {{comparedObject.stringifiedInfo}}</pre>
+    </MirageGenCopyPaste>
+  {{/if}}
 </section>

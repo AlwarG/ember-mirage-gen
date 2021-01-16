@@ -22,7 +22,22 @@ export default Component.extend({
   init() {
     this._super(...arguments);
     const { excludedNodes } =  this.get('mirageGenService.config') || {};
-    this.set('excludedNodes', excludedNodes || []);
+    this.setProperties({
+      excludedNodes: excludedNodes || [],
+      factoriesList: [],
+      fixturesList: []
+    });
+    this.getFileList();
+  },
+
+  getFileList() {
+    ['factories', 'fixtures'].forEach((dirName) => {
+      fetch(`${window.emberMirageGen.serverUrl}/${dirName}`).then((response) => {
+        return response.json().then(({ data }) => {
+          this.set(`${dirName}List`, data);
+        });
+      })
+    })
   },
 
   getdbArray(dbArray, obj, prop = 'root', parentProp = null) {
@@ -57,7 +72,7 @@ export default Component.extend({
     showSpecificDB(toggleId, panelId) {
       document.getElementById(toggleId).classList.toggle('active');
       let panel = document.getElementById(panelId);
-      panel.style.maxHeight = panel.style.maxHeight ? null : `${panel.scrollHeight}px`;
+      panel.style.maxHeight = panel.style.maxHeight ? null : `${panel.scrollHeight + 20}px`;
     }
   }
 });

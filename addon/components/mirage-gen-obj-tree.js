@@ -29,7 +29,7 @@ export default Component.extend({
     let graphEle = this.element.querySelector('#my-graph');
     graphEle.innerHTML = '';
     let listEle = document.createElement('li');
-    let listEleInnerHTML = '<span>Starting Node<div class="mirage-gen-tick-section">';
+    let listEleInnerHTML = '<span>Response Node<div class="mirage-gen-tick-section">';
     Object.keys(typesMap).forEach((key) => {
       let property = `obj.${key}`;
       listEleInnerHTML= `${listEleInnerHTML} <section class="tick-mark-section" obj-location="${property}">${this.getTickSvg(this.get(property) ? 'svg-selected' : 'tick-icon', property)}<br><span class="${typesMap[key].class}">${typesMap[key].name}</span></section>`;
