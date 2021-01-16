@@ -35,7 +35,7 @@ export default Component.extend({
     window.xhook.after(({ method }, { finalUrl: url, data }) => {
       let canPushResponse = true;
       if (isOnlyForCurrentDomain) {
-        let apiDomain = url.split("/")[2];
+        let apiDomain = (url || '').split("/")[2];
         canPushResponse = window.location.hostname === apiDomain;
       }
 

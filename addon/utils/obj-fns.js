@@ -26,10 +26,10 @@ let addCond = (obj) => {
 let getAddedNodes = ['isArray', 'isFactory', 'isFixture', 'isRemoved'];
 
 let setChildNodes = (obj, isMainObj = false) => {
-  let { isFactory, isFixture, isArray, isRemoved } = obj;
+  let { isFactory, isFixture, isRemoved } = obj;
 
   let setDefultProps = (obj) => {
-    Object.assign(obj, {
+    setProperties(obj, {
       isFactory,
       isFixture,
       isRemoved: false
@@ -37,14 +37,14 @@ let setChildNodes = (obj, isMainObj = false) => {
   };
 
   let setProps = (obj) => {
-    Object.assign(obj, {
+    setProperties(obj, {
       isFactory: false,
       isFixture: false,
       isRemoved: true
     });
   };
 
-  if (isArray) {
+  if (Array.isArray(obj)) {
     if (isRemoved) {
       obj.forEach((ele) => {
         if (typeof ele === 'object') {
@@ -77,4 +77,60 @@ let setChildNodes = (obj, isMainObj = false) => {
   return obj;
 }
 
-export default { addCond, getAddedNodes, setChildNodes }
+
+let removeBrackets = (str, startBracket, endBracket) => {
+  let hasStartBracket = false;
+  for (let i = 0; i < str.length; i++) {
+    if (startBracket === str[i]) {
+      hasStartBracket = true;
+      // count for start brackets
+      let j, startBracketCount = 1;
+      for (j = i + 1; j < str.length; j++) {
+        if (startBracket === str[j]) {
+          startBracketCount++;
+        }
+        if (str[j] === endBracket) {
+          startBracketCount--;
+          if (!startBracketCount) {
+            // Check for closing of all open brackets
+            break;
+          }
+        }
+      }
+      if (hasStartBracket) {
+        str = str.replace(str.substring(i, j + 1), '');
+      }
+    }
+  }
+  return str;
+}
+
+
+let getKeys = (objString) => {
+  let myString = (objString || '').slice(1);
+  myString = myString.slice(0, -1);
+  let bracketsObj = {
+    '{': '}',
+    '[': ']',
+    '(': ')'
+  };
+  for (let startBracket in bracketsObj) {
+    myString = removeBrackets(myString, startBracket, bracketsObj[startBracket]);
+  }
+
+  return (myString.split(',') || []).map((key) => {
+    let [node] = key.split(':');
+    if (node.startsWith('\'') || node.startsWith('"')) {
+      node = node.slice(1);
+      node = node.slice(0, -1);
+    }
+    return node;
+  });
+}
+
+let getDBString = (string) => {
+  string = (string || '').split('// $MirageSection-Start$')[1];
+  return (string || '').split('// $MirageSection-End$')[0];
+}
+
+export default { addCond, getAddedNodes, setChildNodes, getKeys, getDBString }
