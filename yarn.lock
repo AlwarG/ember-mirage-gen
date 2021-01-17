@@ -8368,11 +8368,6 @@ xdg-basedir@^3.0.0:
   resolved "https://registry.yarnpkg.com/xdg-basedir/-/xdg-basedir-3.0.0.tgz#496b2cc109eca8dbacfe2dc72b603c17c5870ad4"
   integrity sha1-SWsswQnsqNus/i3HK2A8F8WHCtQ=
 
-xhook@1.4.9:
-  version "1.4.9"
-  resolved "https://registry.yarnpkg.com/xhook/-/xhook-1.4.9.tgz#5ebca6c7f239003c311b746b889081a82e9d4e78"
-  integrity sha512-7uGTRzCO1nMNtzClV0LHSo13vKlr7J9JE6njIMWHDSoub6MLOmam2OgZJESTvGjZpW68gnD69vlRipB6cjM0dg==
-
 xmldom@^0.1.19:
   version "0.1.31"
   resolved "https://registry.yarnpkg.com/xmldom/-/xmldom-0.1.31.tgz#b76c9a1bd9f0a9737e5a72dc37231cf38375e2ff"

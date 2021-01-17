@@ -67,7 +67,7 @@ As shown in the above image, we have the section of the object tree. Here, we ca
  ```
  #### 2) DataBase
   This section contains a list of fixtures and factories which are chosen in the previous section.
-  Here, we can also compare our result with the available `factory/fixture` and generate the new results.. For more info try it in the <a href="https://alwarg.github.io/mirage-gen-demo/" target="_blank" rel="noopener noreferrer">demo</a> page.
+  Here, we can also compare our result with the available `factory/fixture` and generate the new results. For more info try it in the <a href="https://alwarg.github.io/mirage-gen-demo/" target="_blank" rel="noopener noreferrer">demo</a> page.
  
 #### 3) Test file
   It has the creation list of factories as well as fixtures like in the Ember test file.

@@ -107,7 +107,8 @@ module.exports = {
 
   contentFor(type) {
     if (type === 'head' && addonOptions.isEnabled && serverUrl) {
-      return `<script>window.emberMirageGen = { serverUrl: '${serverUrl}' }</script>`
+      return `<script>window.emberMirageGen = { serverUrl: '${serverUrl}' }</script>
+      <script src="https://unpkg.com/xhook@latest/dist/xhook.min.js"></script>`;
     }
   }
 };

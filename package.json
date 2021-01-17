@@ -25,7 +25,6 @@
   "dependencies": {
     "ember-cli-sass": "^10.0.1",
     "sass": "^1.26.10",
-    "xhook": "1.4.9",
     "broccoli-file-creator": "^2.1.1",
     "broccoli-merge-trees": "^3.0.2",
     "ember-cli-htmlbars": "^3.0.0",
