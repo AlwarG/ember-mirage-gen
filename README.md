@@ -72,6 +72,44 @@ As shown in the above image, we have the section of the object tree. Here, we ca
 #### 3) Test file
   It has the creation list of factories as well as fixtures like in the Ember test file.
 
+Comparison
+------------------------------------------------------------------------------
+Sometimes we are not able to parse the object for comparison.
+
+Example:
+
+```javascript
+ import { Factory, faker } from 'ember-cli-mirage';
+
+ let myFactory = Factory.extend({
+   id() {
+     return faker.random.number();
+   },
+   myNumber() {
+     return faker.random.number();
+   }
+ });
+
+  export default myFactory;
+```
+For good parsing kindly add the code as below
+```javascript
+import { Factory, faker } from 'ember-cli-mirage';
+
+let myFactory = Factory.extend(
+  // $MirageSection-Start$
+  {
+  id() {
+    return faker.random.number();
+  },
+  myNumber() {
+    return faker.random.number();
+  }
+  // $MirageSection-End$
+});
+
+export default myFactory;
+```
 Usage
 ------------------------------------------------------------------------------
 

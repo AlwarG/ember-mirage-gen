@@ -133,7 +133,15 @@
 }
 
 .mirage-gen-table {
+  border: none !important;
+  width: 100%;
+
+  tr {
+    border: none !important;
+  }
+
   td {
+    border: none !important;
     padding: 10px;
   }
 }
