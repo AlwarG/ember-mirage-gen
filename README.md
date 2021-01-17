@@ -99,14 +99,15 @@ import { Factory, faker } from 'ember-cli-mirage';
 let myFactory = Factory.extend(
   // $MirageSection-Start$
   {
-  id() {
-    return faker.random.number();
-  },
-  myNumber() {
-    return faker.random.number();
+    id() {
+      return faker.random.number();
+    },
+    myNumber() {
+      return faker.random.number();
+    }
   }
   // $MirageSection-End$
-});
+);
 
 export default myFactory;
 ```
